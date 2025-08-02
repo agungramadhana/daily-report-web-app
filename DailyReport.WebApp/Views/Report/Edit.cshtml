@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Edit Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+}
+
+<div class="card card-custom mb-4">
+    <div class="card-header flex-wrap py-5">
+        <div class="card-title">
+            <h3 class="card-label">
+                Edit Report
+            </h3>
+        </div>
+    </div>
+    <form>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div id="kt_leaflet_3" style="height: 500px; width: 100%;"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Area Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="area-name" name="areaName" placeholder="Area Name" />
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Date<span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="date" name="date" />
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Latitude<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude" />
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Longitude<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group d-flex justify-content-end">
+                    <button class="btn btn-sm btn-primary"><i class="fa fa-eye"></i>Preview</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group">
+                    <label>Report Note</label>
+                    <div class="summernote" id="report-note" name="reportNote"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="@Url.Action("Index", "Report")" class="btn btn-secondary mr-4"><i class="fa fa-times"></i>Cancel</a>
+            <button class="btn btn-primary"><i class="fa fa-save"></i>Save</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/custom/js/features/reports/report-edit.js"></script>
+}

@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Edit User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap py-5">
+        <div class="card-title">
+            <h3 class="card-label">
+                Create User
+            </h3>
+        </div>
+    </div>
+    <form>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Employee Number<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="employee-number" name="employeeNumber" placeholder="Employee Number" />
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Full Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="full-name" name="fullName" placeholder="Full Name" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Username<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="user-name" name="userName" placeholder="Username" />
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Email Address<span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Phone Number<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="phone-number" name="phoneNumber" placeholder="Phone Number" />
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label>Address<span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="address" name="address" placeholder="Address" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label for="exampleSelect1">Role<span class="text-danger">*</span></label>
+                    <select class="form-control" id="user-role" name="userRole">
+                        <option value="">Select Role</option>
+                        <option value="0">Super Administrator</option>
+                        <option value="1">Administrator</option>
+                        <option value="2">User</option>
+                    </select>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                    <label for="exampleSelect1">Status<span class="text-danger">*</span></label>
+                    <select class="form-control" id="user-status" name="userstatus">
+                        <option value="">Select Status</option>
+                        <option value="0">Active</option>
+                        <option value="1">Inactive</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="@Url.Action("Index", "User")" class="btn btn-secondary mr-4"><i class="fa fa-times"></i>Cancel</a>
+            <button class="btn btn-primary"><i class="fa fa-save"></i>Save</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/custom/js/features/users/user-create.js"></script>
+}

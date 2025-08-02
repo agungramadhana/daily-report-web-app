@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Create Role";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap py-5">
+        <div class="card-title">
+            <h3 class="card-label">
+                Detail Roles
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                <label>Role Name<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="role-name" name="rolename" placeholder="Role Name" disabled/>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                <label for="exampleSelect1">Status<span class="text-danger">*</span></label>
+                <select class="form-control" id="role-status" name="rolestatus" disabled>
+                    <option value="">Select Status</option>
+                    <option value="0">Active</option>
+                    <option value="1">Inactive</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-end">
+        <a href="@Url.Action("Index", "Role")" class="btn btn-secondary"><i class="fa fa-arrow-circle-left"></i>Back</a>
+    </div>
+</div>
