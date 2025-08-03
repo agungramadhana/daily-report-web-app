@@ -71,6 +71,12 @@ namespace DailyReport.WebApp.Controllers
             return Ok(await Mediator.Send(request));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Update([FromBody] UpdateRoleCommand request)
+        {
+            return Ok(await Mediator.Send(request));
+        }
+
         private List<SelectListItem> ActiveStatus(bool? activeStatus)
         {
             List<SelectListItem> listActive = new List<SelectListItem>();

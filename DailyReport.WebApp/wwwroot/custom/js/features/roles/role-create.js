@@ -1,9 +1,9 @@
 ﻿"use strict";
 var role = function () {
-
+    var buttonSubmit;
     var create = function () {
         var validation;
-
+        
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validation = FormValidation.formValidation(
             KTUtil.getById('role-form'),
@@ -33,7 +33,7 @@ var role = function () {
             }
         );
 
-        $('#btn-create-user').on('click', function (e) {
+        $(buttonSubmit).on('click', function (e) {
             e.preventDefault();
 
             validation.validate().then(function (status) {
@@ -125,6 +125,7 @@ var role = function () {
 
     return {
         init: function () {
+            buttonsSubmit = document.querySelector('#btn-create-user');
             create();
         }
     };
