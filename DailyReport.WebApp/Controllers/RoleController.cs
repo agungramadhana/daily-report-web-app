@@ -1,6 +1,7 @@
 ﻿using DailyReport.Application;
 using DailyReport.Application.Interfaces;
 using DailyReport.Application.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DailyReport.WebApp.Controllers
@@ -41,6 +42,12 @@ namespace DailyReport.WebApp.Controllers
             {
                 throw new BadHttpRequestException(ex.InnerException?.Message ?? ex.Message);
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateRoleCommand request)
+        {
+            return Ok(await Mediator.Send(request));
         }
     }
 }

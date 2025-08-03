@@ -12,11 +12,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DailyReport.Application
 {
-    public class ListRoleQuery : IRequest<List<ListRoleModel>>
+    public class ListRoleQuery : IRequest<List<RoleModel>>
     {
     }
 
-    public class ListRoleQueryHandler : IRequestHandler<ListRoleQuery, List<ListRoleModel>>
+    public class ListRoleQueryHandler : IRequestHandler<ListRoleQuery, List<RoleModel>>
     {
         private readonly IApplicationDbContext _dbContext;
 
@@ -25,17 +25,17 @@ namespace DailyReport.Application
             _dbContext = dbContext;
         }
 
-        public async Task<List<ListRoleModel>> Handle(ListRoleQuery request, CancellationToken cancellationToken)
+        public async Task<List<RoleModel>> Handle(ListRoleQuery request, CancellationToken cancellationToken)
         {
             var result = await _dbContext.Entity<Role>()
-                .Where(x => !x.IsDeleted && x.Code != RoleEnum.SuperAdministrator)
-                .Select(x => new ListRoleModel
+                .Where(x => !x.IsDeleted && x.Id != Guid.Empty)
+                .OrderByDescending(x => x.CreatedAt)
+                .Select(x => new RoleModel
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    Code = x.Code,
                     IsActive = x.IsActive
-                }).OrderBy(x => x.Code).ToListAsync(cancellationToken: cancellationToken);
+                }).ToListAsync(cancellationToken: cancellationToken);
 
             return result;
         }

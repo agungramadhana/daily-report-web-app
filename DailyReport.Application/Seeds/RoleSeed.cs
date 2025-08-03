@@ -19,19 +19,16 @@ namespace DailyReport.Application.Seeds
                 {
                     Id = Guid.Empty,
                     Name = RoleEnum.SuperAdministrator.GetEnumDescription(),
-                    Code = RoleEnum.SuperAdministrator,
                 },
                 new RoleSeedDTO
                 {
                     Id = Guid.Parse("cea35578-6e4f-48c0-acd6-fabf9400bcda"),
                     Name = RoleEnum.Administrator.GetEnumDescription(),
-                    Code = RoleEnum.Administrator,
                 },
                 new RoleSeedDTO
                 {
                     Id = Guid.Parse("9aad9f43-7909-4aa3-a534-08ef32bbc0a3"),
                     Name = RoleEnum.User.GetEnumDescription(),
-                    Code = RoleEnum.User,
                 }
             };
 

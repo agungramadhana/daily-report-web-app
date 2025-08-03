@@ -11,7 +11,7 @@
             </h3>
         </div>
     </div>
-    <form>
+    <form id="role-form">
         <div class="card-body">
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
@@ -22,15 +22,15 @@
                     <label for="exampleSelect1">Status<span class="text-danger">*</span></label>
                     <select class="form-control" id="role-status" name="rolestatus">
                         <option value="">Select Status</option>
-                        <option value="0">Active</option>
-                        <option value="1">Inactive</option>
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">
             <a href="@Url.Action("Index", "Role")" class="btn btn-secondary mr-4"><i class="fa fa-times"></i>Cancel</a>
-            <button class="btn btn-primary"><i class="fa fa-save"></i>Save</button>
+            <button type="submit" id="btn-create-user" class="btn btn-primary"><i class="fa fa-save"></i>Save</button>
         </div>
     </form>
 </div>

@@ -29,18 +29,19 @@ namespace DailyReport.Application
         public async Task<BaseDatatableResponse> Handle(DatatableRoleQuery request, CancellationToken cancellationToken)
         {
             var query = _dbContext.Entity<Role>()
-                .Where(x => !x.IsDeleted && x.Code != RoleEnum.SuperAdministrator).AsQueryable();
+                .Where(x => !x.IsDeleted && x.Id != Guid.Empty)
+                .OrderByDescending(x => x.CreatedAt)
+                .AsQueryable();
 
             var recordsFiltered = query.Count();
 
-            List<ListRoleModel> data = await query
+            List<RoleModel> data = await query
                                         .Skip(request.Start)
                                         .Take(request.Length)
-                                        .Select(x => new ListRoleModel
+                                        .Select(x => new RoleModel
                                         {
                                             Id = x.Id,
                                             Name = x.Name,
-                                            Code = x.Code,
                                             IsActive = x.IsActive
                                         }).ToListAsync(cancellationToken);
 

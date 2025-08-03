@@ -7,11 +7,10 @@ using DailyReport.Domain.Enums;
 
 namespace DailyReport.Application.Features.Role.Models
 {
-    public class ListRoleModel
+    public class RoleModel
     {
         public Guid? Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public RoleEnum Code { get; set; }
         public bool IsActive { get; set; }
     }
 }

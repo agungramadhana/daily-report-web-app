@@ -37,7 +37,6 @@ namespace DailyReport.Application.Seeds
                     {
                         Id = role.Id,
                         Name = role.Name!,
-                        Code = role.Code
                     });
                 }
             }
