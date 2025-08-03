@@ -15,7 +15,6 @@ namespace DailyReport.Application
     {
     }
 
-
     public class DatatableUserQueryHandler : IRequestHandler<DatatableUserQuery, BaseDatatableResponse>
     {
         private readonly IApplicationDbContext _dbContext;

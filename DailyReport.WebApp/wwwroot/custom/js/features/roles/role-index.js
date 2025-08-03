@@ -4,65 +4,96 @@ var role = function () {
     var initTable = function () {
         var table = $('#kt_datatable');
 
-        // Dummy data
-        var roles = [
-            { id: 1, name: "Super Admin", status: "Active" },
-            { id: 2, name: "Administrator", status: "Active" },
-            { id: 3, name: "Manager", status: "Active" },
-            { id: 4, name: "Editor", status: "Active" },
-            { id: 5, name: "Author", status: "Active" },
-            { id: 6, name: "Contributor", status: "Active" },
-            { id: 7, name: "Subscriber", status: "Active" },
-            { id: 8, name: "Guest", status: "Inactive" },
-            { id: 9, name: "Moderator", status: "Active" },
-            { id: 10, name: "Analyst", status: "Inactive" }
-        ];
-
         table.DataTable({
             responsive: true,
             pagingType: 'full_numbers',
-            data: roles,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '/Role/DatatableRole',
+                type: 'POST',
+                dataType: "json",
+                data: function (d) {
+                    const orderColumnIndex = d.order[0]?.column;
+                    const orderDirection = d.order[0]?.dir;
+                    const orderColumnName = d.columns[orderColumnIndex]?.data;
+
+                    return {
+                        draw: d.draw,
+                        start: d.start,
+                        length: d.length,
+                        search: { value: d.search.value },
+                        order: {
+                            column: orderColumnName,
+                            dir: orderDirection
+                        }
+                    };
+                },
+                dataSrc: function (json) {
+                    if (json && json.isSuccess && json.payload) {
+                        // These must be set at the root level for DataTables
+                        json.recordsTotal = json.payload.recordsTotal;
+                        json.recordsFiltered = json.payload.recordsFiltered;
+                        return json.payload.data;
+                    }
+                    console.error("Invalid response structure", json);
+                    return [];
+                }
+            },
             columns: [
                 {
-                    data: "id",
+                    data: null,
+                    name: "no",
                     title: "No",
-                    className: "text-center"
+                    className: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        return meta.settings._iDisplayStart + meta.row + 1;
+                    }
                 },
                 {
                     data: "name",
+                    name: "name",
                     title: "Role Name",
                     className: "text-center"
                 },
                 {
-                    data: "status",
+                    data: "isActive",
+                    name: "isActive",
                     title: "Status",
                     className: "text-center",
-                    render: function (data, type, row) {
-                        var badgeClass = data === "Active" ? "badge-success" : "badge-danger";
-                        return `<span class="badge ${badgeClass}">${data}</span>`;
+                    render: function (data) {
+                        const badgeClass = data ? "badge-success" : "badge-danger";
+                        const statusName = data ? "Active" : "Inactive";
+                        return `<span class="badge ${badgeClass}">${statusName}</span>`;
                     }
                 },
                 {
+                    data: null,
+                    name: "actions",
                     title: "Actions",
                     className: "text-center",
                     orderable: false,
                     width: '125px',
-                    defaultContent: '', // Add this line to prevent the parameter error
                     render: function (data, type, row) {
+                        const id = row.id || '';
                         return `
-                            <a href='/Role/Detail' class="btn btn-icon btn-xs btn-light-success mr-1" data-toggle="tooltip" data-placement="bottom" title="Detail">
+                            <a href='/Role/Detail/${id}' class="btn btn-icon btn-xs btn-light-success mr-1" title="Detail">
                                 <i class="fa fa-eye"></i>
                             </a>
-                            <a href='/Role/Edit' class="btn btn-icon btn-xs btn-light-primary mr-1" data-toggle="tooltip" data-placement="bottom" title="Edit">
+                            <a href='/Role/Edit/${id}' class="btn btn-icon btn-xs btn-light-primary mr-1" title="Edit">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <button class="btn btn-icon btn-xs btn-light-danger" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                            <button data-id='${id}' class="btn btn-icon btn-xs btn-light-danger btn-delete-role" title="Delete">
                                 <i class="fa fa-trash"></i>
                             </button>
                         `;
                     }
                 }
-            ]
+            ],
+            error: function (xhr, error, thrown) {
+                console.error('DataTables error:', error, thrown);
+            }
         });
     };
 

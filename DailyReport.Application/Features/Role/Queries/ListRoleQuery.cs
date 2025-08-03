@@ -34,6 +34,7 @@ namespace DailyReport.Application
                     Id = x.Id,
                     Name = x.Name,
                     Code = x.Code,
+                    IsActive = x.IsActive
                 }).OrderBy(x => x.Code).ToListAsync(cancellationToken: cancellationToken);
 
             return result;
