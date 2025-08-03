@@ -77,6 +77,15 @@ namespace DailyReport.WebApp.Controllers
             return Ok(await Mediator.Send(request));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid Id)
+        {
+            return Ok(await Mediator.Send(new DeleteRoleCommand
+            {
+                Id = Id
+            }));
+        }
+
         private List<SelectListItem> ActiveStatus(bool? activeStatus)
         {
             List<SelectListItem> listActive = new List<SelectListItem>();
