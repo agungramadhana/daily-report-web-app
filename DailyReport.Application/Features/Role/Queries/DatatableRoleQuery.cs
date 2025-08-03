@@ -1,4 +1,4 @@
-﻿using DailyReport.Application.Features.Role.Models;
+﻿using DailyReport.Application;
 using DailyReport.Application.Models;
 using DailyReport.Domain.Entities;
 using DailyReport.Domain.Enums;

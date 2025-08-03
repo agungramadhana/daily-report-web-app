@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DailyReport.Domain.Enums;
 
-namespace DailyReport.Application.Features.Role.Models
+namespace DailyReport.Application
 {
     public class RoleModel
     {

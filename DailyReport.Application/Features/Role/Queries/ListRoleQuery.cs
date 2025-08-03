@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DailyReport.Application.Features.Role.Models;
+using DailyReport.Application;
 using DailyReport.Domain.Entities;
 using DailyReport.Domain.Entities;
 using DailyReport.Domain.Enums;

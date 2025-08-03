@@ -1,15 +1,20 @@
 ﻿using DailyReport.Application;
 using DailyReport.Application.Interfaces;
 using DailyReport.Application.Models;
+using DailyReport.Domain.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 
 namespace DailyReport.WebApp.Controllers
 {
     public class RoleController : BaseController
     {
-        public RoleController(ICurrentUserService currentUser) : base(currentUser)
+        private readonly ILogger<RoleController> _logger;
+        public RoleController(ICurrentUserService currentUser, ILogger<RoleController> logger) : base(currentUser)
         {
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -18,15 +23,31 @@ namespace DailyReport.WebApp.Controllers
         }
         public IActionResult Create()
         {
+            ViewBag.ActiveStatus = ActiveStatus(null);
+
             return View();
         }
-        public IActionResult Detail()
+        public async Task<IActionResult> Detail(Guid Id)
         {
-            return View();
+            var role = await Mediator.Send(new DetailRoleQuery
+            {
+                Id = Id
+            });
+
+            ViewBag.ActiveStatus = ActiveStatus(role.IsActive);
+
+            return View(role);
         }
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(Guid Id)
         {
-            return View();
+            var role = await Mediator.Send(new DetailRoleQuery
+            {
+                Id = Id
+            });
+
+            ViewBag.ActiveStatus = ActiveStatus(role.IsActive);
+
+            return View(role);
         }
 
         [HttpPost]
@@ -48,6 +69,16 @@ namespace DailyReport.WebApp.Controllers
         public async Task<IActionResult> Create([FromBody] CreateRoleCommand request)
         {
             return Ok(await Mediator.Send(request));
+        }
+
+        private List<SelectListItem> ActiveStatus(bool? activeStatus)
+        {
+            List<SelectListItem> listActive = new List<SelectListItem>();
+            listActive.Add(new SelectListItem { Text = "Select Status", Value = "" });
+            listActive.Add(new SelectListItem { Text = "Active", Value = "true", Selected = (activeStatus is not null ? activeStatus == true ? true : false : false) });
+            listActive.Add(new SelectListItem { Text = "Inactive", Value = "false", Selected = (activeStatus is not null ? activeStatus == false ? true : false : false) });
+
+            return listActive;
         }
     }
 }

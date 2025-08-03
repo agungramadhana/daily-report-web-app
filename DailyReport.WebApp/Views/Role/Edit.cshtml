@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DailyReport.Application.RoleModel;
+@{
     ViewData["Title"] = "Edit Role";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,15 +17,11 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label>Role Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="role-name" name="rolename" placeholder="Role Name" />
+                    <input type="text" class="form-control" id="role-name" name="rolename" placeholder="Role Name" value="@Model.Name" />
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label for="exampleSelect1">Status<span class="text-danger">*</span></label>
-                    <select class="form-control" id="role-status" name="rolestatus">
-                        <option value="">Select Status</option>
-                        <option value="0">Active</option>
-                        <option value="1">Inactive</option>
-                    </select>
+                    @Html.DropDownList("rolestatus", (List<SelectListItem>)ViewBag.ActiveStatus, new { @class = "form-control", @id = "role-status" })
                 </div>
             </div>
         </div>

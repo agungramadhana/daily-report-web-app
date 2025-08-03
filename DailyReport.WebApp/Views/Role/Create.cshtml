@@ -20,11 +20,7 @@
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label for="exampleSelect1">Status<span class="text-danger">*</span></label>
-                    <select class="form-control" id="role-status" name="rolestatus">
-                        <option value="">Select Status</option>
-                        <option value="true">Active</option>
-                        <option value="false">Inactive</option>
-                    </select>
+                    @Html.DropDownList("rolestatus", (List<SelectListItem>)ViewBag.ActiveStatus, new { @class = "form-control", @id = "role-status" })
                 </div>
             </div>
         </div>
