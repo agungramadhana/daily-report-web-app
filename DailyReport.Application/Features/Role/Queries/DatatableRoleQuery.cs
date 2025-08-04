@@ -33,6 +33,19 @@ namespace DailyReport.Application
                 .OrderByDescending(x => x.CreatedAt)
                 .AsQueryable();
 
+            if (!string.IsNullOrEmpty(request.Keyword))
+                query = query.Where(x => x.Name.ToLower().Contains(request.Keyword.ToLower()));
+
+            switch (request?.OrderCol?.ToLower())
+            {
+                case "name":
+                    query = request.OrderType == "asc" ? query.OrderBy(x => x.Name) : query.OrderByDescending(x => x.Name);
+                    break;
+                case "isactive":
+                    query = request.OrderType == "asc" ? query.OrderBy(x => x.IsActive) : query.OrderByDescending(x => x.IsActive);
+                    break;
+            }
+
             var recordsFiltered = query.Count();
 
             List<RoleModel> data = await query

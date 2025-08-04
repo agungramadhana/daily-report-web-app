@@ -22,11 +22,9 @@ var role = function () {
                         draw: d.draw,
                         start: d.start,
                         length: d.length,
-                        search: { value: d.search.value },
-                        order: {
-                            column: orderColumnName,
-                            dir: orderDirection
-                        }
+                        keyword: d.search.value,
+                        orderCol: orderColumnName,
+                        orderType: orderDirection
                     };
                 },
                 dataSrc: function (json) {
