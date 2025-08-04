@@ -9,9 +9,11 @@ namespace DailyReport.Application
 {
     public class DatatableUserModel
     {
-        public Guid? Id { get; set; }
-        public string? UserName { get; set; }
-        public string? Role { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public Guid Id { get; set; }
+        public string EmployeeNumber { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string RoleName { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
     }
 }

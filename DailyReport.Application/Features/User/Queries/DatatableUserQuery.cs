@@ -26,37 +26,33 @@ namespace DailyReport.Application
         public async Task<BaseDatatableResponse> Handle(DatatableUserQuery request, CancellationToken cancellationToken)
         {
             var query = _dbContext.Entity<User>()
-                                .Where(x => !x.IsDeleted);
+                        .Include(x => x.Role)
+                        .Where(x => !x.IsDeleted);
 
             var recordsTotal = query.Count();
 
-            if (request.Keyword?.ToLower() != null)
-            {
-                query = query.Where(x => x.UserName.ToLower().Contains(request.Keyword.ToLower()));
-            }
+            if (!string.IsNullOrEmpty(request.Keyword))
+                query = query.Where(x => x.FullName.ToLower().Contains(request.Keyword.ToLower()) || 
+                                         x.UserName.ToLower().Contains(request.Keyword.ToLower()) ||
+                                         x.EmployeeNumber.ToLower().Contains(request.Keyword.ToLower()) ||
+                                         x.Role.Name.ToLower().Contains(request.Keyword.ToLower())
+                                    );
 
-            switch(request.OrderCol?.ToLower())
+            switch (request.OrderCol?.ToLower())
             {
+                case "fullname":
+                    query = request.OrderType == "asc" ? query.OrderBy(x => x.FullName) : query.OrderByDescending(x => x.FullName);
+                    break;
                 case "username":
-                    if (request.OrderType == "asc")
-                    {
-                        query = query.OrderBy(x => x.UserName);
-                    }
-                    else
-                    {
-                        query = query.OrderByDescending(x => x.UserName);
-                    }
+                    query = request.OrderType == "asc" ? query.OrderBy(x => x.UserName) : query.OrderByDescending(x => x.UserName);
                     break;
-                case "createdat":
-                    if (request.OrderType == "asc")
-                    {
-                        query = query.OrderBy(x => x.CreatedAt);
-                    }
-                    else
-                    {
-                        query = query.OrderByDescending(x => x.CreatedAt);
-                    }
+                case "employeename":
+                    query = request.OrderType == "asc" ? query.OrderBy(x => x.EmployeeNumber) : query.OrderByDescending(x => x.EmployeeNumber);
                     break;
+                case "rolename":
+                    query = request.OrderType == "asc" ? query.OrderBy(x => x.Role.Name) : query.OrderByDescending(x => x.Role.Name);
+                    break;
+                
             }
 
             var recordsFiltered = query.Count();
@@ -67,8 +63,11 @@ namespace DailyReport.Application
                                             .Select(x => new DatatableUserModel
                                             {
                                                 Id = x.Id,
+                                                EmployeeNumber = x.EmployeeNumber,
+                                                FullName = x.FullName,
                                                 UserName = x.UserName,
-                                                CreatedAt = x.CreatedAt
+                                                RoleName = x.Role.Name,
+                                                IsActive = x.IsActive
                                             })
                                             .ToListAsync(cancellationToken);
             
