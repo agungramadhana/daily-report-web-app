@@ -1,21 +1,28 @@
 ﻿using DailyReport.Application;
 using DailyReport.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading.Tasks;
 
 namespace DailyReport.WebApp.Controllers
 {
     public class UserController : BaseController
     {
-        public UserController(ICurrentUserService currentUser) : base(currentUser)
+        private readonly ILogger<UserController> logger;
+        public UserController(ICurrentUserService currentUser, ILogger<UserController> logger) : base(currentUser)
         {
+            this.logger = logger;
         }
 
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.ListRole = ListRoles().Result;
+            ViewBag.ActiveStatus = ActiveStatus(null);
+
             return View();
         }
         public IActionResult Detail()
@@ -25,6 +32,12 @@ namespace DailyReport.WebApp.Controllers
         public IActionResult Edit()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateUserCommand request)
+        {
+            return Ok(await Mediator.Send(request));
         }
 
         [HttpPost]
@@ -40,6 +53,37 @@ namespace DailyReport.WebApp.Controllers
             {
                 throw new BadHttpRequestException(ex.InnerException?.Message ?? ex.Message);
             }
+        }
+
+        private List<SelectListItem> ActiveStatus(bool? activeStatus)
+        {
+            List<SelectListItem> listActive = new List<SelectListItem>();
+            listActive.Add(new SelectListItem { Text = "Select Status", Value = "" });
+            listActive.Add(new SelectListItem { Text = "Active", Value = "true", Selected = (activeStatus is not null ? activeStatus == true ? true : false : false) });
+            listActive.Add(new SelectListItem { Text = "Inactive", Value = "false", Selected = (activeStatus is not null ? activeStatus == false ? true : false : false) });
+
+            return listActive;
+        }
+        private async Task<List<SelectListItem>> ListRoles()
+        {
+            var listRole = new List<SelectListItem>();
+            var roles = await Mediator.Send(new ListRoleQuery());
+
+            listRole.Add(new SelectListItem
+            {
+                Text = "Select Role",
+                Value = string.Empty
+            });
+
+            foreach (var item in roles)
+            {
+                listRole.Add(new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                });
+            }
+            return listRole;
         }
     }
 }

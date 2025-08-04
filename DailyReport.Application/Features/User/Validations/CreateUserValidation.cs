@@ -9,14 +9,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DailyReport.Application.Features
 {
-    public class AddUserValidation : AbstractValidator<AddUserCommand>
+    public class CreateUserValidation : AbstractValidator<CreateUserCommand>
     {
         IApplicationDbContext _dbContext;
 
-        public AddUserValidation(IApplicationDbContext dbContext)
+        public CreateUserValidation(IApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
 
+            RuleFor(x => x.EmployeeNumber)
+                .NotNull().NotEmpty().WithMessage("Employee number is required")
+                .MustAsync(async (employeeNumber, cancellationToken) =>
+                {
+                    var requestEmployeeNumber = employeeNumber.ToLower();
+                    return !await _dbContext.Entity<User>().AnyAsync(a => a.EmployeeNumber.ToLower() == requestEmployeeNumber && a.IsDeleted == false, cancellationToken);
+                }).WithMessage("Employee number already exists");
+            RuleFor(x => x.FullName).NotNull().NotEmpty().WithMessage("Full name is required");
             RuleFor(x => x.UserName).NotEmpty().WithMessage("Username is required");
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email is required")
@@ -29,6 +37,7 @@ namespace DailyReport.Application.Features
             RuleFor(x => x.Address).NotEmpty().WithMessage("Address is required");
             RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Phone number is required");
             RuleFor(x => x.RoleId).NotEmpty().WithMessage("Role is required");
+            RuleFor(x => x.IsActive).NotEmpty().WithMessage("Status is required");
         }
     }
 }
