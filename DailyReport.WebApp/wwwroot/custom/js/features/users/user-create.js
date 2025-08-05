@@ -100,11 +100,96 @@ var user = function () {
         );
 
         $(buttonSubmit).on('click', function (e) {
-            e.preeventDefault();
+            e.preventDefault();
 
             validation.validate().then(function (status) {
                 if (status == 'Valid') {
-                    alert('valid');
+                    Swal.fire({
+                        html: `Are you sure want to <strong>save</strong>?`,
+                        icon: "info",
+                        buttonsStyling: false,
+                        showCancelButton: true,
+                        cancelButtonText: 'Cancel',
+                        confirmButtonText: "Submit",
+                        customClass: {
+                            confirmButton: "btn btn-primary mr-2",
+                            cancelButton: 'btn btn-danger'
+                        }
+                    }).then(function (confirm) {
+
+                        if (confirm.isConfirmed) {
+
+                            var formData = {
+                                EmployeeNumber: $('#employee-number').val(),
+                                FullName: $('#full-name').val(),
+                                Username: $('#user-name').val(),
+                                Email: $('#email').val(),
+                                PhoneNumber: $('#phone-number').val(),
+                                Address: $('#address').val(),
+                                Password: $('#password').val(),
+                                RoleId: $('#user-role').val(),
+                                IsActive: $('#user-status').val() === 'true'
+                            };
+                            $.ajax({
+                                url: '/User/Create',
+                                type: "POST",
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(formData),
+                                success: function (response) {
+                                    if (response.isSuccess) {
+                                        Swal.fire({
+                                            position: "center",
+                                            icon: "success",
+                                            title: "Success Add Role",
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                        }).then(function (result) {
+                                            if (result.dismiss === "timer") {
+                                                window.location.href = "/User/Index"
+                                            } else {
+                                                window.location.href = "/User/Index"
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            position: "center",
+                                            icon: "error",
+                                            title: response.message,
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        });
+                                    }
+                                },
+                                error: function (response) {
+
+                                    var errorMessages = [];
+
+                                    var exceptionMessage = response.responseJSON.exceptionMessage;
+
+                                    for (var key in exceptionMessage) {
+                                        if (exceptionMessage.hasOwnProperty(key)) {
+                                            var errors = exceptionMessage[key].errorMessage;
+                                            errorMessages = errorMessages.concat(errors);
+                                        }
+                                    }
+
+                                    var errorMessageText = errorMessages.join("\n");
+
+                                    Swal.fire({
+                                        position: "center",
+                                        icon: "error",
+                                        title: errorMessageText,
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                }
+                            });
+
+                        }
+                    });
+
                 }
             });
         });
