@@ -30,10 +30,14 @@ namespace DailyReport.Application
                                 .Select(x => new DetailUserModel
                                 {
                                     Id = x.Id,
+                                    EmployeeNumber = x.EmployeeNumber,
+                                    FullName = x.FullName,
                                     UserName = x.UserName,
                                     Email = x.Email,
                                     PhoneNumber = x.PhoneNumber,
-                                    Address = x.Address
+                                    Address = x.Address,
+                                    RoleId = x.RoleId,
+                                    IsActive = x.IsActive
                                 })
                                 .FirstOrDefaultAsync(cancellationToken);
 

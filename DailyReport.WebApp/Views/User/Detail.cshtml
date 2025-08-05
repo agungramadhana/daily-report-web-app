@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DailyReport.Application.DetailUserModel;
+@{
     ViewData["Title"] = "Detail User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -15,50 +16,41 @@
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Employee Number<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="employee-number" name="employeeNumber" placeholder="Employee Number" disabled />
+                <input type="text" class="form-control" id="employee-number" name="employeeNumber" placeholder="Employee Number" value="@Model.EmployeeNumber" disabled />
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Full Name<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="full-name" name="fullName" placeholder="Full Name" disabled />
+                <input type="text" class="form-control" id="full-name" name="fullName" placeholder="Full Name" value="@Model.FullName" disabled />
             </div>
         </div>
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Username<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="user-name" name="userName" placeholder="Username" disabled />
+                <input type="text" class="form-control" id="user-name" name="userName" placeholder="Username" value="@Model.UserName" disabled />
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Email Address<span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" disabled />
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" value="@Model.Email" disabled />
             </div>
         </div>
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Phone Number<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="phone-number" name="phoneNumber" placeholder="Phone Number" disabled />
+                <input type="text" class="form-control" id="phone-number" name="phoneNumber" placeholder="Phone Number" value="@Model.PhoneNumber" disabled />
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Address<span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="address" name="address" placeholder="Address" disabled />
+                <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="@Model.Address" disabled />
             </div>
         </div>
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label for="exampleSelect1">Role<span class="text-danger">*</span></label>
-                <select class="form-control" id="user-role" name="userRole" disabled>
-                    <option value="">Select Role</option>
-                    <option value="0">Super Administrator</option>
-                    <option value="1">Administrator</option>
-                    <option value="2">User</option>
-                </select>
+                @Html.DropDownList("userRole", (List<SelectListItem>)ViewBag.ListRole, new { @class = "form-control", @id = "user-role", @disabled = "disabled" })
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label for="exampleSelect1">Status<span class="text-danger">*</span></label>
-                <select class="form-control" id="user-status" name="userstatus" disabled>
-                    <option value="">Select Status</option>
-                    <option value="0">Active</option>
-                    <option value="1">Inactive</option>
-                </select>
+                @Html.DropDownList("userStatus", (List<SelectListItem>)ViewBag.ActiveStatus, new { @class = "form-control", @id = "user-status", @disabled = "disabled" })
             </div>
         </div>
     </div>

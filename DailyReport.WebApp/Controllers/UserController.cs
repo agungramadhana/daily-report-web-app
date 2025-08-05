@@ -20,14 +20,22 @@ namespace DailyReport.WebApp.Controllers
         }
         public async Task<IActionResult> Create()
         {
-            ViewBag.ListRole = ListRoles().Result;
+            ViewBag.ListRole = ListRoles(null).Result;
             ViewBag.ActiveStatus = ActiveStatus(null);
 
             return View();
         }
-        public IActionResult Detail()
+        public async Task<IActionResult> Detail(Guid Id)
         {
-            return View();
+            var data = await Mediator.Send(new DetailUserQuery
+            {
+                Id = Id
+            });
+
+            ViewBag.ListRole = ListRoles(data.RoleId).Result;
+            ViewBag.ActiveStatus = ActiveStatus(data.IsActive);
+
+            return View(data);
         }
         public IActionResult Edit()
         {
@@ -64,7 +72,7 @@ namespace DailyReport.WebApp.Controllers
 
             return listActive;
         }
-        private async Task<List<SelectListItem>> ListRoles()
+        private async Task<List<SelectListItem>> ListRoles(Guid? roleId)
         {
             var listRole = new List<SelectListItem>();
             var roles = await Mediator.Send(new ListRoleQuery());
@@ -80,7 +88,8 @@ namespace DailyReport.WebApp.Controllers
                 listRole.Add(new SelectListItem
                 {
                     Text = item.Name,
-                    Value = item.Id.ToString()
+                    Value = item.Id.ToString(),
+                    Selected = roleId is not null && roleId == item.Id ? true : false
                 });
             }
             return listRole;
