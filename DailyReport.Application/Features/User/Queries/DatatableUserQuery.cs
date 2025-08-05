@@ -40,6 +40,9 @@ namespace DailyReport.Application
 
             switch (request.OrderCol?.ToLower())
             {
+                case "employeenumber":
+                    query = request.OrderType == "asc" ? query.OrderBy(x => x.EmployeeNumber) : query.OrderByDescending(x => x.EmployeeNumber);
+                    break;
                 case "fullname":
                     query = request.OrderType == "asc" ? query.OrderBy(x => x.FullName) : query.OrderByDescending(x => x.FullName);
                     break;

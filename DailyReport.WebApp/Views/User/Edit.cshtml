@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DailyReport.Application.DetailUserModel;
+@{
     ViewData["Title"] = "Edit User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,65 +12,57 @@
             </h3>
         </div>
     </div>
-    <form>
+    <form id="user-form">
         <div class="card-body">
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label>Employee Number<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="employee-number" name="employeeNumber" placeholder="Employee Number" />
+                    <input value="@Model.Id" id="user-id" hidden/>
+                    <input type="text" class="form-control" id="employee-number" name="employeeNumber" placeholder="Employee Number" value="@Model.EmployeeNumber" />
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label>Full Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="full-name" name="fullName" placeholder="Full Name" />
+                    <input type="text" class="form-control" id="full-name" name="fullName" placeholder="Full Name" value="@Model.FullName"  />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label>Username<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="user-name" name="userName" placeholder="Username" />
+                    <input type="text" class="form-control" id="user-name" name="userName" placeholder="Username" value="@Model.UserName"  />
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label>Email Address<span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" />
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" value="@Model.Email"  />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label>Phone Number<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="phone-number" name="phoneNumber" placeholder="Phone Number" />
+                    <input type="text" class="form-control" id="phone-number" name="phoneNumber" placeholder="Phone Number" value="@Model.PhoneNumber"  />
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label>Address<span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="address" name="address" placeholder="Address" />
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="@Model.Address"  />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label for="exampleSelect1">Role<span class="text-danger">*</span></label>
-                    <select class="form-control" id="user-role" name="userRole">
-                        <option value="">Select Role</option>
-                        <option value="0">Super Administrator</option>
-                        <option value="1">Administrator</option>
-                        <option value="2">User</option>
-                    </select>
+                    @Html.DropDownList("userRole", (List<SelectListItem>)ViewBag.ListRole, new { @class = "form-control", @id = "user-role" })
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                     <label for="exampleSelect1">Status<span class="text-danger">*</span></label>
-                    <select class="form-control" id="user-status" name="userstatus">
-                        <option value="">Select Status</option>
-                        <option value="0">Active</option>
-                        <option value="1">Inactive</option>
-                    </select>
+                    @Html.DropDownList("userStatus", (List<SelectListItem>)ViewBag.ActiveStatus, new { @class = "form-control", @id = "user-status" })
                 </div>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">
             <a href="@Url.Action("Index", "User")" class="btn btn-secondary mr-4"><i class="fa fa-times"></i>Cancel</a>
-            <button class="btn btn-primary"><i class="fa fa-save"></i>Save</button>
+            <button type="submit" id="btn-submit-user" class="btn btn-primary"><i class="fa fa-save"></i>Save</button>
         </div>
     </form>
 </div>
 
 @section Scripts {
-    <script src="~/custom/js/features/users/user-create.js"></script>
+    <script src="~/custom/js/features/users/user-edit.js"></script>
 }

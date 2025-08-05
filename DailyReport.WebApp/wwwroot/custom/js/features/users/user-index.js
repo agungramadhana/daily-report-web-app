@@ -140,7 +140,7 @@ var user = function () {
                                 Swal.fire({
                                     position: "center",
                                     icon: "success",
-                                    title: "Role has been deleted",
+                                    title: "User has been deleted",
                                     showConfirmButton: false,
                                     timer: 3000,
                                 })

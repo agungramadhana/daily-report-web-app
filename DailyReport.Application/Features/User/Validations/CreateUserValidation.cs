@@ -37,7 +37,6 @@ namespace DailyReport.Application.Features
             RuleFor(x => x.Address).NotEmpty().WithMessage("Address is required");
             RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Phone number is required");
             RuleFor(x => x.RoleId).NotEmpty().WithMessage("Role is required");
-            RuleFor(x => x.IsActive).NotEmpty().WithMessage("Status is required");
         }
     }
 }

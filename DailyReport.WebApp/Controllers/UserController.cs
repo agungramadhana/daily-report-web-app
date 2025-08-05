@@ -20,7 +20,7 @@ namespace DailyReport.WebApp.Controllers
         }
         public async Task<IActionResult> Create()
         {
-            ViewBag.ListRole = ListRoles(null).Result;
+            ViewBag.ListRole = await ListRoles(null);
             ViewBag.ActiveStatus = ActiveStatus(null);
 
             return View();
@@ -37,9 +37,17 @@ namespace DailyReport.WebApp.Controllers
 
             return View(data);
         }
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(Guid Id)
         {
-            return View();
+            var data = await Mediator.Send(new DetailUserQuery
+            {
+                Id = Id
+            });
+
+            ViewBag.ListRole = ListRoles(data.RoleId).Result;
+            ViewBag.ActiveStatus = ActiveStatus(data.IsActive);
+
+            return View(data);
         }
 
         [HttpPost]
@@ -61,6 +69,20 @@ namespace DailyReport.WebApp.Controllers
             {
                 throw new BadHttpRequestException(ex.InnerException?.Message ?? ex.Message);
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromBody] UpdateUserCommand request)
+        {
+            return Ok(await Mediator.Send(request));
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid Id)
+        {
+            return Ok(await Mediator.Send(new DeleteUserCommand
+            {
+                Id = Id
+            }));
         }
 
         private List<SelectListItem> ActiveStatus(bool? activeStatus)

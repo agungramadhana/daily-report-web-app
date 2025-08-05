@@ -14,11 +14,14 @@ namespace DailyReport.Application
     public class UpdateUserCommand : IRequest
     {
         public Guid Id { get; set; }
+        public string? EmployeeNumber { get; set; }
+        public string? FullName { get; set; }
         public string? UserName { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
         public Guid RoleId { get; set; }
+        public bool IsActive { get; set; }
     }
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
@@ -37,15 +40,19 @@ namespace DailyReport.Application
             {
                 var query = await _dbContext.Entity<User>().FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-                if (query == null)
+                if (query is null)
                 {
-                    throw new NotFoundException();
+                    throw new NotFoundException("User not found");
                 }
 
-                query.UserName = request.UserName;
-                query.Email = request.Email;
+                query.EmployeeNumber = request.EmployeeNumber!;
+                query.FullName = request.FullName!;
+                query.UserName = request.UserName!;
+                query.Email = request.Email!;
                 query.PhoneNumber = request.PhoneNumber;
                 query.Address = request.Address;
+                query.RoleId = request.RoleId;
+                query.IsActive = request.IsActive;
 
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
