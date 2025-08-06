@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DailyReport.Application.Features.Report.Models
+namespace DailyReport.Application
 {
     public class ReportModel
     {
@@ -14,5 +14,6 @@ namespace DailyReport.Application.Features.Report.Models
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public DateTime Date { get; set; }
+        public string? ReportNote { get; set; }
     }
 }

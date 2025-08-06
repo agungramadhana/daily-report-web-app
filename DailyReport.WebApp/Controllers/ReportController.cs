@@ -21,16 +21,31 @@ namespace DailyReport.WebApp.Controllers
         {
             return View();
         }
-        public IActionResult Detail(Guid Id)
+        public async Task<IActionResult> Detail(Guid Id)
         {
-            return View();
+            var report = await Mediator.Send(new DetailReportQuery
+            {
+                Id = Id
+            });
+
+            return View(report);
         }
-        public IActionResult Edit(Guid Id)
+        public async Task<IActionResult> Edit(Guid Id)
         {
-            return View();
+            var report = await Mediator.Send(new DetailReportQuery
+            {
+                Id = Id
+            });
+
+            return View(report);
         }
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateReportCommand request)
+        {
+            return Ok(await Mediator.Send(request));
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update([FromBody] UpdateReportCommand request)
         {
             return Ok(await Mediator.Send(request));
         }

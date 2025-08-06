@@ -1,17 +1,36 @@
 ﻿"use strict";
 var report = function () {
-    var create = function () {
+    var detail = function () {
+        // Format the date display
+        var date = $('#report-date').val();
+        $('#date').val(moment(date).format('YYYY-MM-DD'));
+
+        var latitude = $('#latitude').val().replace(',', '.');
+        $('#latitude').val(latitude)
+        var longitude = $('#longitude').val().replace(',', '.');
+        $('#longitude').val(longitude)
+
+        // Initialize Summernote with the content from hidden input
         $('.summernote').summernote({
             minHeight: 100
         });
+
+        // Set Summernote content and disable it
+        var reportNote = $('#report-note').val();
+        $('.summernote').summernote('code', reportNote);
         $('.summernote').summernote('disable');
-        
     };
 
     var maps = function () {
+        // Get latitude and longitude from input fields
+        var latitude = $('#latitude').val().replace(',', '.');
+        var longitude = $('#longitude').val().replace(',', '.');
+        var areaName = $('#area-name').val();
+
+        // Create map centered on the provided coordinates
         var leaflet = L.map('kt_leaflet_3', {
             center: [-8.85, 125.60], // fokus ke Dili
-            zoom: 8
+            zoom: 8 // Increased zoom level to focus better on the marker
         });
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -26,17 +45,16 @@ var report = function () {
             className: 'leaflet-marker'
         });
 
-        var marker1 = L.marker([-8.5569, 125.5603], { icon: leafletIcon }).addTo(leaflet);
-        var marker2 = L.marker([-8.9965, 125.5083], { icon: leafletIcon }).addTo(leaflet);
-        marker1.bindPopup("Dili, Timor Leste", { closeButton: false });
-        marker2.bindPopup("Anaru, Timor Leste", { closeButton: false });
+        // Add marker at the specified coordinates
+        var marker1 = L.marker([latitude, longitude], { icon: leafletIcon }).addTo(leaflet);
+        marker1.bindPopup(areaName, { closeButton: false });
 
         L.control.scale().addTo(leaflet);
     };
 
     return {
         init: function () {
-            create();
+            detail();
             maps();
         }
     };

@@ -1,4 +1,4 @@
-﻿using DailyReport.Application.Features.Report.Models;
+﻿using DailyReport.Application;
 using DailyReport.Application.Models;
 using DailyReport.Domain.Entities;
 using MediatR;

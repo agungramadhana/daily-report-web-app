@@ -74,7 +74,7 @@ var report = function () {
                                 Date: moment().format($('#date').val()),
                                 Latitude: $('#latitude').val(),
                                 Longitude: $('#longitude').val(),
-                                ReportNote: $('#report-note').val()
+                                ReportNote: $('.summernote').summernote('code')
                             };
                             $.ajax({
                                 url: '/Report/Create',
@@ -190,7 +190,7 @@ var report = function () {
             marker1.bindPopup(areaName, { closeButton: false });
 
             // Center the map on the marker with a higher zoom level
-            currentMap.setView([lat, long], 12);
+            currentMap.setView([lat, long], 8);
         }
 
         L.control.scale().addTo(currentMap);

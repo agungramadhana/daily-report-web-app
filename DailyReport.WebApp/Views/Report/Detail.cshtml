@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Create Report";
+﻿@model DailyReport.Application.ReportModel;
+@{
+    ViewData["Title"] = "Detail Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,24 +22,26 @@
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Area Name<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="area-name" name="areaName" placeholder="Area Name" disabled/>
+                <input type="text" class="form-control" id="area-name" name="areaName" placeholder="Area Name" disabled value="@Model.AreaName"/>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Date<span class="text-danger">*</span></label>
+                <input value="@Model.Date"  id="report-date" hidden/>
                 <input type="date" class="form-control" id="date" name="date" disabled />
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Latitude<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude" disabled />
+                <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude" disabled value="@Model.Latitude"/>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
                 <label>Longitude<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude" disabled />
+                <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude" disabled value="@Model.Longitude"/>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group">
                 <label>Report Note</label>
+                <input hidden value="@Model.ReportNote" id="report-note"/>
                 <div class="summernote" id="report-note" name="reportNote"></div>
             </div>
         </div>
