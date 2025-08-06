@@ -20,9 +20,4 @@
     <ProjectReference Include="..\DailyReport.Domain\DailyReport.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Report\Models\" />
-    <Folder Include="Features\Report\Queries\" />
-  </ItemGroup>
-
 </Project>

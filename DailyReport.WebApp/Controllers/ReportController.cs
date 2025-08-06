@@ -6,8 +6,11 @@ namespace DailyReport.WebApp.Controllers
 {
     public class ReportController : BaseController
     {
-        public ReportController(ICurrentUserService currentUser) : base(currentUser)
+        private readonly ILogger<ReportController> _logger;
+
+        public ReportController(ICurrentUserService currentUser, ILogger<ReportController> logger) : base(currentUser)
         {
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -18,16 +21,21 @@ namespace DailyReport.WebApp.Controllers
         {
             return View();
         }
-        public IActionResult Detail()
+        public IActionResult Detail(Guid Id)
         {
             return View();
         }
-        public IActionResult Edit()
+        public IActionResult Edit(Guid Id)
         {
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateReportCommand request)
+        {
+            return Ok(await Mediator.Send(request));
+        }
+        [HttpPost]
+        public async Task<IActionResult> DatatableReport(DatatableReportQuery request)
         {
             return Ok(await Mediator.Send(request));
         }
