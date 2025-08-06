@@ -50,6 +50,14 @@ namespace DailyReport.WebApp.Controllers
             return Ok(await Mediator.Send(request));
         }
         [HttpPost]
+        public async Task<IActionResult> Delete(Guid Id)
+        {
+            return Ok(await Mediator.Send(new DeleteReportCommand
+            {
+                Id = Id
+            }));
+        }
+        [HttpPost]
         public async Task<IActionResult> DatatableReport(DatatableReportQuery request)
         {
             return Ok(await Mediator.Send(request));

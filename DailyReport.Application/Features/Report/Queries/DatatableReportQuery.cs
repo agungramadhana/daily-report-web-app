@@ -25,14 +25,14 @@ namespace DailyReport.Application
         public async Task<BaseDatatableResponse> Handle(DatatableReportQuery request, CancellationToken cancellationToken)
         {
             var query = _dbContext.Entity<Report>()
-                        .Where(x => x.CreatedBy != null)
+                        .Where(x => !x.IsDeleted)
                         .Select(x => new ReportModel
                         {
                             Id = x.Id,
                             FullName = _dbContext.Entity<User>()
                                 .Where(u => u.Id.ToString() == x.CreatedBy)
                                 .Select(u => u.FullName)
-                                .FirstOrDefault(),
+                                .FirstOrDefault()!,
                             AreaName = x.AreaName,
                             Latitude = x.Latitude,
                             Longitude = x.Longitude,
