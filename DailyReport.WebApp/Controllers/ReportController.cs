@@ -1,11 +1,12 @@
-﻿using DailyReport.Application.Interfaces;
+﻿using DailyReport.Application;
+using DailyReport.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DailyReport.WebApp.Controllers
 {
-    public class Report : BaseController
+    public class ReportController : BaseController
     {
-        public Report(ICurrentUserService currentUser) : base(currentUser)
+        public ReportController(ICurrentUserService currentUser) : base(currentUser)
         {
         }
 
@@ -24,6 +25,11 @@ namespace DailyReport.WebApp.Controllers
         public IActionResult Edit()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateReportCommand request)
+        {
+            return Ok(await Mediator.Send(request));
         }
     }
 }

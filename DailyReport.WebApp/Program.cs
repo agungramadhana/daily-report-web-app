@@ -65,6 +65,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Authentication}/{action=Index}/{id?}");
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 using (var scope = app.Services.CreateScope())
 {
     ApplicationDbContext appDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

@@ -14,7 +14,7 @@
             </h3>
         </div>
     </div>
-    <form>
+    <form id="report-form">
         <div class="card-body">
             <div class="row mb-4">
                 <div id="kt_leaflet_3" style="height: 500px; width: 100%;"></div>
@@ -39,7 +39,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group d-flex justify-content-end">
-                    <button class="btn btn-sm btn-primary"><i class="fa fa-eye"></i>Preview</button>
+                    <button id="btn-map-preview" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i>Preview</button>
                 </div>
             </div>
             <div class="row">
@@ -51,7 +51,7 @@
         </div>
         <div class="card-footer d-flex justify-content-end">
             <a href="@Url.Action("Index", "Report")" class="btn btn-secondary mr-4"><i class="fa fa-times"></i>Cancel</a>
-            <button class="btn btn-primary"><i class="fa fa-save"></i>Save</button>
+            <button type="submit" id="btn-submit-report" class="btn btn-primary"><i class="fa fa-save"></i>Save</button>
         </div>
     </form>
 </div>

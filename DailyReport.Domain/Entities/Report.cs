@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DailyReport.Domain.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DailyReport.Domain.Entities
 {
-    public class Report : BaseEntity
+    public class Report : BaseEntity, IEntity
     {
         public string AreaName { get; set; } = string.Empty;
         public double Latitude { get; set; }
