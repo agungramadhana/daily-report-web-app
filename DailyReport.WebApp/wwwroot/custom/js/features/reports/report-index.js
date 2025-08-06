@@ -137,7 +137,7 @@ var report = function () {
                                 Swal.fire({
                                     position: "center",
                                     icon: "success",
-                                    title: "User has been deleted",
+                                    title: "Report has been deleted",
                                     showConfirmButton: false,
                                     timer: 3000,
                                 })
